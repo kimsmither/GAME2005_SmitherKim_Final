@@ -56,14 +56,16 @@ public class CubeBehaviour : MonoBehaviour
     public Vector3 size;
     public Vector3 max;
     public Vector3 min;
+    public Vector3 half;
     public bool isColliding;
     public bool debug;
     public List<Contact> contacts;
-
     private MeshFilter meshFilter;
     public Bounds bounds;
     public bool isGrounded;
+    public bool isPlayer = false;
 
+    public Vector3 Dimensions = new Vector3(1.0f, 1.0f, 1.0f);
 
     // Start is called before the first frame update
     void Start()
@@ -82,6 +84,7 @@ public class CubeBehaviour : MonoBehaviour
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
 
+        half = Vector3.Scale(transform.lossyScale, Dimensions) * 0.5f;
     }
 
     private void OnDrawGizmos()

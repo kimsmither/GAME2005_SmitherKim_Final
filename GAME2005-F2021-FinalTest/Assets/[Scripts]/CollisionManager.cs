@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,7 +9,6 @@ public class CollisionManager : MonoBehaviour
 {
     public CubeBehaviour[] cubes;
     public BulletBehaviour[] spheres;
-
     private static Vector3[] faces;
 
     // Start is called before the first frame update
@@ -53,8 +53,6 @@ public class CollisionManager : MonoBehaviour
                 
             }
         }
-
-
     }
 
     public static void CheckSphereAABB(BulletBehaviour s, CubeBehaviour b)
@@ -126,9 +124,7 @@ public class CollisionManager : MonoBehaviour
     {
         Contact contactB = new Contact(b);
 
-        if ((a.min.x <= b.max.x && a.max.x >= b.min.x) &&
-            (a.min.y <= b.max.y && a.max.y >= b.min.y) &&
-            (a.min.z <= b.max.z && a.max.z >= b.min.z))
+        if ((a.min.x <= b.max.x && a.max.x >= b.min.x) && (a.min.y <= b.max.y && a.max.y >= b.min.y) && (a.min.z <= b.max.z && a.max.z >= b.min.z))
         {
             // determine the distances between the contact extents
             float[] distances = {
@@ -181,7 +177,6 @@ public class CollisionManager : MonoBehaviour
                 // add the new contact
                 a.contacts.Add(contactB);
                 a.isColliding = true;
-                
             }
         }
         else
