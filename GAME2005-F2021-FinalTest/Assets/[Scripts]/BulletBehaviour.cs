@@ -8,11 +8,14 @@ public class BulletBehaviour : MonoBehaviour
     public float speed;
     public Vector3 direction;
     public float range;
-    public float radius;
+    public Vector3 max;
+    public Vector3 min;
     public bool debug;
     public bool isColliding;
     public Vector3 collisionNormal;
     public float penetration;
+    public Bounds bounds;
+
 
     public BulletManager bulletManager;
 
@@ -20,7 +23,9 @@ public class BulletBehaviour : MonoBehaviour
     void Start()
     {
         isColliding = false;
-        radius = Mathf.Max(transform.localScale.x, transform.localScale.y, transform.localScale.z) * 0.5f;
+        max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
+        min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
+
         bulletManager = FindObjectOfType<BulletManager>();
     }
 
@@ -50,7 +55,7 @@ public class BulletBehaviour : MonoBehaviour
         {
             Gizmos.color = Color.magenta;
 
-            Gizmos.DrawWireSphere(transform.position, radius);
+            Gizmos.DrawWireCube(transform.position, max);
         }
     }
 }

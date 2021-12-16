@@ -11,7 +11,7 @@ public class PlayerBoxCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        void checkCollision()
+        void CheckCollision()
         {
             for (int i = 0; i < cubes.Count; i++)
             {

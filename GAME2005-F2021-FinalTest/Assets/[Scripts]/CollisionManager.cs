@@ -48,16 +48,15 @@ public class CollisionManager : MonoBehaviour
             {
                 if (cube.name != "Player")
                 {
-                    CheckSphereAABB(sphere, cube);
+                    CheckBulletAABB(sphere, cube);
                 }
                 
             }
         }
     }
 
-    public static void CheckSphereAABB(BulletBehaviour s, CubeBehaviour b)
+    public static void CheckBulletAABB(BulletBehaviour s, CubeBehaviour b)
     {
-        // get box closest point to sphere center by clamping
         var x = Mathf.Max(b.min.x, Mathf.Min(s.transform.position.x, b.max.x));
         var y = Mathf.Max(b.min.y, Mathf.Min(s.transform.position.y, b.max.y));
         var z = Mathf.Max(b.min.z, Mathf.Min(s.transform.position.z, b.max.z));
@@ -66,7 +65,7 @@ public class CollisionManager : MonoBehaviour
                                  (y - s.transform.position.y) * (y - s.transform.position.y) +
                                  (z - s.transform.position.z) * (z - s.transform.position.z));
 
-        if ((distance < s.radius) && (!s.isColliding))
+        if ((distance < s.transform.localScale.magnitude/2) && (!s.isColliding))
         {
             // determine the distances between the contact extents
             float[] distances = {
@@ -154,7 +153,6 @@ public class CollisionManager : MonoBehaviour
             contactB.face = face;
             contactB.penetration = penetration;
 
-
             // check if contact does not exist
             if (!a.contacts.Contains(contactB))
             {
@@ -177,7 +175,9 @@ public class CollisionManager : MonoBehaviour
                 // add the new contact
                 a.contacts.Add(contactB);
                 a.isColliding = true;
+                ApplyTranslations(a, b, penetration, face);
             }
+
         }
         else
         {
@@ -193,6 +193,19 @@ public class CollisionManager : MonoBehaviour
                     a.isGrounded = false;
                 }
             }
+        }
+    }
+
+    static void ApplyTranslations(CubeBehaviour a, CubeBehaviour b, float overlap, Vector3 face)
+    {
+        if (!b.isPlayer)
+        {
+            b.transform.position += -face * (overlap/2);
+        }
+
+        if (!a.isPlayer)
+        {
+            a.transform.position += -face * (overlap/2);
         }
     }
 }
