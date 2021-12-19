@@ -1445,7 +1445,7 @@ MonoBehaviour:
   timer: 0
   isFalling: 0
   velocity: {x: 0, y: 0, z: 0}
-  acceleration: {x: 0, y: 0, z: 0}
+  acceleration: {x: 1, y: 0, z: 0}
 --- !u!114 &893925099
 MonoBehaviour:
   m_ObjectHideFlags: 0

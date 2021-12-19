@@ -62,10 +62,10 @@ public class CollisionManager : MonoBehaviour
         var z = Mathf.Max(b.min.z, Mathf.Min(s.transform.position.z, b.max.z));
 
         var distance = Math.Sqrt((x - s.transform.position.x) * (x - s.transform.position.x) +
-                                 (y - s.transform.position.y) * (y - s.transform.position.y) +
-                                 (z - s.transform.position.z) * (z - s.transform.position.z));
+                                       (y - s.transform.position.y) * (y - s.transform.position.y) +
+                                       (z - s.transform.position.z) * (z - s.transform.position.z));
 
-        if ((distance < s.transform.localScale.magnitude/2) && (!s.isColliding))
+        if ((distance < s.transform.localScale.x) && (!s.isColliding))
         {
             // determine the distances between the contact extents
             float[] distances = {
@@ -175,7 +175,7 @@ public class CollisionManager : MonoBehaviour
                 // add the new contact
                 a.contacts.Add(contactB);
                 a.isColliding = true;
-                ApplyTranslations(a, b, penetration, face);
+                //ApplyTranslations(a, b, penetration, face);
             }
 
         }
@@ -196,16 +196,16 @@ public class CollisionManager : MonoBehaviour
         }
     }
 
-    static void ApplyTranslations(CubeBehaviour a, CubeBehaviour b, float overlap, Vector3 face)
-    {
-        if (!b.isPlayer)
-        {
-            b.transform.position += -face * (overlap/2);
-        }
+    //static void ApplyTranslations(CubeBehaviour a, CubeBehaviour b, float overlap, Vector3 face)
+    //{
+    //    if (!b.isPlayer)
+    //    {
+    //        b.transform.position += face * (overlap/2);
+    //    }
 
-        if (!a.isPlayer)
-        {
-            a.transform.position += -face * (overlap/2);
-        }
-    }
+    //    if (!a.isPlayer)
+    //    {
+    //        a.transform.position += face * (overlap/2);
+    //    }
+    //}
 }
